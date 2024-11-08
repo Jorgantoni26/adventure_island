@@ -7,7 +7,7 @@ from decorativos.decorativos import House, Tree
 from funciones.escenario import show_start_screen, display_score_and_lives, display_game_over, display_victory
 import time
 import sqlite3
-
+BROWN=(139, 69, 19)
 # Registra el tiempo de inicio al comienzo del juego
 start_time = time.time()
 # Al finalizar la partida (cuando el jugador gana)
@@ -73,7 +73,7 @@ def display_top_10(screen):
             y_offset += 40
 
     pygame.display.flip()
-    pygame.time.delay(2000)
+    pygame.time.delay(6000)
 
 def run_game():
     pygame.init()
@@ -89,7 +89,7 @@ def run_game():
     # Verifica si el jugador quiere ver el ranking antes de iniciar el juego
     if action == "view_ranking":
         display_top_10(screen)  # Muestra el ranking
-        pygame.time.delay(5000)  # Pausa para visualizar el ranking
+        pygame.time.delay(15000)  # Pausa para visualizar el ranking
         action, player_name = show_start_screen(screen, WIDTH, HEIGHT)  # Regresa a la pantalla de inicio después de ver el ranking
 
     # Solo continúa si la acción es iniciar el juego
@@ -104,12 +104,12 @@ def run_game():
     clock = pygame.time.Clock()
     player = Player()
     house = House(WIDTH, HEIGHT)  # Instancia la casa con los valores de ancho y alto
-    collectibles = [Collectible(pos) for pos in [(100, HEIGHT - 50), (400, HEIGHT - 80), (650, HEIGHT - 50), (1000, HEIGHT - 50)]]
-    diamonds = [Diamond(pos) for pos in [(200, 100), (800, 100)]]
-    trees = [Tree(1000, HEIGHT - 60), Tree(380, HEIGHT - 60)]
-    snails = [Snail(600, HEIGHT - 30), Snail(200, HEIGHT - 30)]
-    birds = [Bird(50), Bird(100)]
-    rocks = [Rock(300, HEIGHT - 30), Rock(600, HEIGHT - 30), Rock(900, HEIGHT - 30), Rock(450, HEIGHT - 30)]
+    collectibles = [Collectible(pos) for pos in [(100, HEIGHT - 50), (400, HEIGHT - 120), (750, HEIGHT - 80), (1100, HEIGHT - 50)]]
+    diamonds = [Diamond(pos) for pos in [(200, 80), (800, 80)]]
+    trees = [Tree(1000, HEIGHT - 80), Tree(380, HEIGHT - 80)]
+    snails = [Snail(600, HEIGHT - 50), Snail(200, HEIGHT - 50)]
+    birds = [Bird(75), Bird(100), Bird(80), Bird(90), Bird(60), Bird(75), Bird(65), Bird(70), Bird(80)]
+    rocks = [Rock(300, HEIGHT - 50), Rock(600, HEIGHT - 50), Rock(900, HEIGHT - 50), Rock(450, HEIGHT - 50)]
     start_ticks = pygame.time.get_ticks()  #para parar el temporizador
 
     while True:
@@ -185,6 +185,7 @@ def run_game():
 
         # Dibuja todos los elementos en la pantalla
         screen.fill((135, 206, 235))
+        pygame.draw.rect(screen, BROWN, (0, HEIGHT - 20, WIDTH, 40))  # Piso más ancho
 
         # Dibuja la casa
         screen.blit(house.image, house.rect)
@@ -216,7 +217,7 @@ def run_game():
         screen.blit(player.image, player.rect)
 
         # Dibuja el puntaje y las vidas
-        display_score_and_lives(screen, score, lives, HEIGHT)
+        display_score_and_lives(screen, score, lives, time_left)
 
         pygame.display.flip()
         clock.tick(60)

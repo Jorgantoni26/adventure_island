@@ -2,6 +2,9 @@ import pygame
 import sys
 
 # Función para mostrar la pantalla de inicio
+
+HEIGHT= 250
+
 def show_start_screen(screen, WIDTH, HEIGHT):
     input_box = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 - 20, 200, 40)
     color_inactive = pygame.Color('lightskyblue3')
@@ -69,14 +72,20 @@ def show_start_screen(screen, WIDTH, HEIGHT):
         pygame.display.flip()
 
 # Función para mostrar el puntaje y las vidas
-def display_score_and_lives(screen, score, lives, height):
+def display_score_and_lives(screen, score, lives, time_left):
     font = pygame.font.Font(None, 36)
     score_surface = font.render(f"Puntos: {score}", True, (0, 0, 0))
     screen.blit(score_surface, (10, 10))
+    
     for i in range(lives):
         player_image = pygame.image.load("C:/Users/jorga/Downloads/Adventure island/island/personaje.png")
         player_image = pygame.transform.scale(player_image, (30, 30))
         screen.blit(player_image, (1300 - 50 - (i * 50), 10))
+
+    timer_surface = font.render(f"Tiempo: {time_left // 1000}", True, (0, 0, 0))  # Convertir milisegundos a segundos
+    screen.blit(timer_surface, (600, 10))  # Centrar el temporizador
+
+    
 
 # Función para mostrar Game Over
 def display_game_over(screen):
